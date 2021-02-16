@@ -67,18 +67,26 @@ export class RadioComponent implements OnInit {
 
   }
   play() {
+    this.stream.pause();
     this.stream.play();
     this.promise = new Promise((resolve, reject) => {
       this.stream.addEventListener('playing', () => {
+        this.spinerTrue = false;
         this.buttonplay = false;
         resolve(true);
       });
       this.stream.addEventListener('waiting', () => {
+        this.spinerTrue = true;
         this.buttonplay = false;
-        resolve(true);
+        this.stream.pause();
+        this.stream.play();
+        reject(false);
       });
       this.stream.addEventListener('error', () => {
+        this.spinerTrue = false;
         this.buttonplay = true;
+        this.stream.pause();
+        this.stream.play();
         reject(false);
       });
     });
