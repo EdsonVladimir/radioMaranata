@@ -1,5 +1,7 @@
 {
-  "name": "maranatha02",
-  "integrations": {},
+  "name": "Aguas de Reposo FM 99.7",
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

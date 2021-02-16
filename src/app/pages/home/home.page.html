@@ -1,0 +1,55 @@
+
+
+<ion-content class="bg-image no-scroll ">
+  <ion-tabs class="clase-padre">
+    <ion-tab-bar class="paddingnue" color="secondary" slot="top">
+      <div class="botonspace" (click)="radioEvent()">
+      <div class="actives" *ngIf="botonRadio" >
+       <img class="iconos-menu" src="assets/icon/ico_radio_on.png">
+        <br>
+        <ion-text>radio</ion-text>
+      </div>
+      <div class="inverse" *ngIf="!botonRadio" >
+        <img class="iconos-menu" src="assets/icon/ico_radio_off.png" >
+        <br>
+        <ion-text>radio</ion-text>
+      </div>
+      </div>
+      <div class="botonspace" (click)="predicasEvent()">
+      <div class="actives" *ngIf="botonPredicas">
+        <img class="iconos-menu" src="assets/icon/ico_predicas_on.png" >
+        <br>
+        <ion-text>prédicas</ion-text>
+      </div>
+      <div class="inverse"  *ngIf="!botonPredicas" >
+        <img class="iconos-menu" src="assets/icon/ico_predicas_off.png" >
+        <br>
+        <ion-text>prédicas</ion-text>
+      </div>
+      </div>
+      <div  class="botonspace" (click)="envivoEvent()">
+      <div class="actives" *ngIf="botonEnvivo">
+        <img class="iconos-menu-vivo" src="assets/icon/ico_envivo_on.png" >
+        <br>
+        <ion-text>en vivo</ion-text>
+      </div>
+      <div class="inverse"  *ngIf="!botonEnvivo">
+        <img class="iconos-menu-vivo" src="assets/icon/ico_envivo_off.png" >
+        <br>
+        <ion-text>en vivo</ion-text>
+      </div>
+      </div>
+      <div class="botonspace" (click)="ubicacionEvent()">
+      <div class="actives" *ngIf="botonUbicaciones">
+        <img class="iconos-menu-ubi" src="assets/icon/ico_ubicacion_on.png" >
+        <ion-text>ubicación</ion-text>
+      </div>
+      <div class="inverse" *ngIf="!botonUbicaciones" >
+        <img class="iconos-menu-ubi" src="assets/icon/ico_ubicacion_off.png" >
+        <ion-text>ubicación</ion-text>
+      </div>
+      </div>
+    </ion-tab-bar>
+  </ion-tabs>
+<router-outlet></router-outlet>
+</ion-content>

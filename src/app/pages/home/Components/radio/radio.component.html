@@ -1,0 +1,33 @@
+<ion-card-content class="imagen-card">
+  <ion-img src="assets/img/logo_maranatha_color.png"></ion-img>
+</ion-card-content>
+<ion-card-content class="imagen-card-uno">
+  <ion-img src="assets/img/img_dial.png"></ion-img>
+</ion-card-content>
+<ion-card-content class="imagen-card">
+  <ion-fab horizontal="start" vertical="bottom" slot="fixed">
+    <ion-fab-button [disabled]="buttonPlay" class="botton-audio" color="transparent" (click)="openPicker()" *ngIf="timer">
+    <ion-icon class="icono-position" color="secondary" name="time"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button class="botton-audio" color="transparent" (click)="openPicker()" *ngIf="!timer">
+    <countdown [config]="tiempo"></countdown>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-fab horizontal="center" class="botton-audio-uno" vertical="bottom" slot="fixed" >
+    <ion-fab-button *ngIf="!spinerTrue" (click)="startAudio()" class="botton-audio" color="secondary">
+      <ion-icon color="fondogen" name="caret-forward" *ngIf="buttonplay"></ion-icon>
+      <ion-icon color="fondogen" name="pause" *ngIf="!buttonplay"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button *ngIf="spinerTrue" class="botton-audio" color="secondary">
+      <ion-spinner name="circles"></ion-spinner>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-fab  horizontal="end" vertical="bottom" slot="fixed" >
+    <ion-fab-button (click)="muteAudio()" color="transparent">
+      <ion-icon  color="secondary" name="volume-high" *ngIf="buttonmute"></ion-icon>
+      <ion-icon  color="secondary" name="volume-mute" *ngIf="!buttonmute"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-card-content>
+

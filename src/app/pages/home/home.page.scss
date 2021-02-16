@@ -1,0 +1,64 @@
+ion-content {
+  --background: url('../../../assets/img/fondo_02.png') no-repeat center center fixed cover;
+  --background-size: cover;
+}
+logs-line{
+  color: #001A3E;
+}
+.iconos-menu {
+  margin-top: 15px;
+  width: 15px;
+}
+.iconos-menu-vivo {
+  margin-top: 11px;
+  width: 23px;
+}
+.iconos-menu-ubi {
+  margin-top: 9px;
+  width: 15px;
+}
+ion-label{
+  font-size: 9px;
+  margin-top: 80px;
+}
+
+.actives{
+  font-size: 10px;
+  color: #3dc2ff;
+  margin: auto;
+  text-align:center;
+  justify-content:center;
+  width: 58px;
+  height: 58px;
+  transition: width 5s;
+  background: #222248;
+  border-radius: 30px;
+}
+.inverse{
+  font-size: 10px;
+  color: #222248;
+  margin: auto;
+  text-align:center;
+  justify-content:center;
+  width: 58px;
+  height: 58px;
+  transition: width 5s;
+  background: #3dc2ff;
+  border-radius: 30px;
+
+}
+.item-dato{
+  background: #3dc2ff;
+}
+cuerpo-nuevo {
+  background: #3dc2ff!important;
+}
+
+.botonspace {
+  margin-left: auto;
+  margin-right: auto;
+}
+.paddingnue {
+  padding-top:1px;
+  padding-bottom: 1px;
+}

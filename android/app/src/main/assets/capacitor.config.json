@@ -1,0 +1,13 @@
+{
+  "appId": "app.maranatha.com",
+  "appName": "Aguas de Reposo FM 99.7",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 5000
+    }
+  },
+  "cordova": {}
+}

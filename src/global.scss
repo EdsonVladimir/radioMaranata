@@ -24,3 +24,47 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+ion-content {
+  --background: url('assets/img/fondo_02.png') no-repeat center center fixed cover;
+  --background-size: cover;
+}
+.imagen-card{
+  margin: auto;
+  width: 70%;
+  padding: 60px 0px 60px 0px;
+}
+@media screen and ( height: 640px ) {
+  .imagen-card{
+    margin: auto;
+    width: 70%;
+    padding: 40px 0px 40px 0px;
+  }
+}
+@media screen and ( height: 533px) and (width: 320px){
+  .imagen-card{
+    margin: auto;
+    width: 70%;
+    padding: 20px 0px 20px 0px;
+  }
+}
+@media screen and ( height: 480px) and (width: 320px){
+  .imagen-card{
+    margin: auto;
+    width: 70%;
+    padding: 15px 0px 15px 0px;
+  }
+}
+@media screen and ( height: 667px ) {
+  .imagen-card{
+    margin: auto;
+    width: 70%;
+    padding: 50px 0px 50px 0px;
+  }
+}
+@media screen and ( height: 568px ) {
+  .imagen-card{
+    margin: auto;
+    width: 70%;
+    padding: 30px 0px 30px 0px;
+  }
+}
