@@ -42,18 +42,6 @@ export class RadioComponent implements OnInit {
       '120 m'
 ]
   ];
-  // @ts-ignore
-  option: StreamingAudioOptions = {
-    initFullscreen: false, // true is default. iOS only.
-    keepAwake: false,
-    controls: false,
-    bgImage: '../../../../assets/img/fondo_02.png',
-    orientation: 'portrait|landscape',
-    shouldAutoClose: false,
-    successCallback: () => { console.log('Video played'); },
-    errorCallback: (e) => { console.log('Error streaming'); }
-  };
-  // file = new Audio('http://159.65.43.68:8006/;');
 
   constructor(
                 private nativeAudio: NativeAudio,
@@ -66,64 +54,35 @@ export class RadioComponent implements OnInit {
     this.stream = new Audio(this.url);
 
   }
-  play() {
-    this.stream.pause();
-    this.stream.play();
-    this.promise = new Promise((resolve, reject) => {
-      this.stream.addEventListener('playing', () => {
-        this.spinerTrue = false;
-        this.buttonplay = false;
-        resolve(true);
-      });
-      this.stream.addEventListener('waiting', () => {
-        this.spinerTrue = true;
-        this.buttonplay = false;
-        this.stream.pause();
-        this.stream.play();
-        reject(false);
-      });
-      this.stream.addEventListener('error', () => {
-        this.spinerTrue = false;
-        this.buttonplay = true;
-        this.stream.pause();
-        this.stream.play();
-        reject(false);
-      });
-    });
-    return this.promise;
-  };
-  pause() {
-    this.buttonplay = true;
-    this.stream.pause();
-  };
   ngOnInit() {
 
   }
 
   startAudio() {
     if (this.buttonplay) {
-        this.play().play().then(() => {
-        console.log('Playing');
+      this.stream.play();
+      this.buttonPlay = false;
+      this.stream.addEventListener('playing', () => {
+        this.spinerTrue = false;
+        this.buttonplay = false;
       });
+    /*  this.stream.addEventListener('waiting', () => {
+        this.spinerTrue = true;
+        this.buttonplay = false;
+        this.stream.pause();
+        this.stream = new Audio(this.url);
+        //  this.stream.release();
+        // this.stream.load();
+        this.stream.play();
+      });*/
     } else {
-      this.pause();
-      console.log('Pause');
+      this.stream.pause();
+      this.buttonplay = true;
+      this.buttonPlay = true;
+      //console.log('Pause');
     }
   }
-    // this.streamingMedia.playAudio('http://159.65.43.68:8006/;', this.option);
-    /*this.file.autoplay = true;
-    this.file.preload = 'auto';
-    if (this.buttonplay){
-      this.file.play();
-      this.buttonplay = false;
-    } else {
-      this.file.pause();
-      this.file.addEventListener('pause', () => {
-        this.buttonPlay = true;
-      });
-      this.buttonplay = true;
-    }
-  }*/
+
   muteAudio(){
     if (this.buttonmute){
       this.stream.muted = true;
@@ -171,15 +130,15 @@ export class RadioComponent implements OnInit {
             }
             this.segIntTotal = this.minInt * 60 * 1000;
             if (this.segIntTotal > 0){
-                clearTimeout(this.varTime);
+                //clearTimeout(this.varTime);
                 this.timer = false;
-                this.varTime = setTimeout( () => {
-                this.stream.pause();
-                this.tiempoMostrar = 0;
-                this.segIntTotal = 0;
-                this.timer = true;
-                this.buttonplay = true;
-              }, this.segIntTotal);
+               // this.varTime = setTimeout( () => {
+               // this.stream.pause();
+               // this.tiempoMostrar = 0;
+               // this.segIntTotal = 0;
+               // this.timer = true;
+               // this.buttonplay = true;
+             // }, this.segIntTotal);
                 this.tiempoMostrar = this.minInt * 60;
                 this.tiempo =
                 {leftTime: this.tiempoMostrar};
@@ -188,7 +147,7 @@ export class RadioComponent implements OnInit {
         }, {
         text: 'cancelar',
           handler: (value) => {
-            clearTimeout(this.varTime);
+            //clearTimeout(this.varTime);
             this.tiempoMostrar = 0;
             this.segIntTotal = 0;
             this.timer = true;
@@ -220,20 +179,4 @@ export class RadioComponent implements OnInit {
     }
     return options;
   }
- /* simpleNotif() {
-    this.localNotifications.schedule({
-
-      id: 1,
-      led: '282828',
-      sound: null,
-      title: 'Maranatha',
-      data: { button: 'OK' },
-      lockscreen: true,
-      sticky: true,
-      actions: [
-        { id: 'yes', title: 'Yes' },
-        { id: 'no', title: 'No' }
-      ]
-    });
-  }*/
 }
