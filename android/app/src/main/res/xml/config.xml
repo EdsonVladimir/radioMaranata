@@ -10,8 +10,17 @@
     <param name="android-package" value="org.apache.cordova.device.Device"/>
   </feature>
 
+  <feature name="File">
+    <param name="android-package" value="org.apache.cordova.file.FileUtils"/>
+    <param name="onload" value="true"/>
+  </feature>
+
   <feature name="LocalNotification">
     <param name="android-package" value="de.appplant.cordova.plugin.localnotification.LocalNotification"/>
+  </feature>
+
+  <feature name="Media">
+    <param name="android-package" value="org.apache.cordova.media.AudioHandler"/>
   </feature>
 
   <feature name="NativeAudio">

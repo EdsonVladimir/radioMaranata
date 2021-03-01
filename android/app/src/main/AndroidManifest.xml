@@ -30,6 +30,7 @@
             </intent-filter>
 
         </activity>
+6
 
         <provider
             android:name="androidx.core.content.FileProvider"

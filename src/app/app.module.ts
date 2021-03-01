@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { Network } from '@ionic-native/network/ngx';
 import { NativeAudio } from '@ionic-native/native-audio/ngx';
 import { LocalNotifications} from '@ionic-native/local-notifications/ngx';
+import { Media } from '@ionic-native/media/ngx';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -27,7 +28,8 @@ import { LocalNotifications} from '@ionic-native/local-notifications/ngx';
     NativeAudio,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     StreamingMedia,
-      LocalNotifications
+      LocalNotifications,
+      Media
   ],
   bootstrap: [AppComponent]
 })

@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NativeAudio } from '@ionic-native/native-audio/ngx';
-import { StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-media/ngx';
 import {NavController, PickerController} from '@ionic/angular';
-import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
-
-import {Router} from '@angular/router';
-import { ILocalNotificationActionType } from '@ionic-native/local-notifications/ngx';
-import instantiateStreaming = WebAssembly.instantiateStreaming;
+import { Media, MediaObject } from '@ionic-native/media/ngx';
+import { ToastController } from '@ionic/angular';
+import { Network } from '@ionic-native/network/ngx';
+import { Observable } from 'rxjs'
 @Component({
   selector: 'app-radio',
   templateUrl: './radio.component.html',
@@ -29,10 +26,11 @@ export class RadioComponent implements OnInit {
   buttonPlay = true;
   navCtrl: any;
   spinerTrue = false;
-  file: any;
+  stream: MediaObject;
   url: string;
-  stream: any;
   promise: any;
+  resultado: any;
+  errorCode:any = {};
   defaultColumnOptions = [
     [
       '10 m',
@@ -44,51 +42,77 @@ export class RadioComponent implements OnInit {
   ];
 
   constructor(
-                private nativeAudio: NativeAudio,
                 private pickerCtrl: PickerController,
-                private streamingMedia: StreamingMedia,
-                private localNotifications: LocalNotifications
+                private media: Media,
+                public toastController: ToastController,
+                public network: Network
               ) {
-    // tslint:disable-next-line:label-position
-    this.url = 'http://159.65.43.68:8006/;';
-    this.stream = new Audio(this.url);
-
   }
+
   ngOnInit() {
+    this.network.onConnect().subscribe(() => 
+      //this.spinerTrue = false
+      console.log('conectado a internet')
+);
+
+  this.network.onDisconnect().subscribe((res) => 
+    //  console.log('No hay conexion a internet :-(');
+      //console.log(res);
+      this.presentToast('No hay conexion a internet', 'danger', 3000)
+  )
+  }
+  ngAfterViewInit():void {
 
   }
-
+  spinertrue(){
+    this.spinerTrue = true;
+  }
+  spinerfalse(){
+    this.spinerTrue = false;
+  }
   startAudio() {
+    //console.log("hola munfo");
     if (this.buttonplay) {
-      this.stream.play();
-      this.buttonPlay = false;
-      this.stream.addEventListener('playing', () => {
-        this.spinerTrue = false;
-        this.buttonplay = false;
+      this.stream = this.media.create('http://159.65.43.68:8006/;');
+      this.stream.onStatusUpdate.subscribe(status => {
+        this.resultado = status;
+        if(this.resultado === 1){
+          this.presentToast('Conectando', 'primary', 3000)
+        }
+        if(this.resultado === 2){
+          this.presentToast('Conectado', 'success', 2000)
+        }
       });
-    /*  this.stream.addEventListener('waiting', () => {
-        this.spinerTrue = true;
-        this.buttonplay = false;
-        this.stream.pause();
-        this.stream = new Audio(this.url);
-        //  this.stream.release();
-        // this.stream.load();
-        this.stream.play();
-      });*/
+     
+      //this.stream.onSuccess.subscribe(() => this.presentToast('todo bien', 'succes'));
+      this.stream.onError.subscribe(error => {
+        this.errorCode =error;
+        if(this.errorCode.code === 0){
+          this.presentToast('Intente de nuevo', 'danger', 2000)
+        }
+        if(this.errorCode.code === 2){
+          this.presentToast('Error de Red', 'danger', 2000)
+        }
+      }
+        );
+
+      this.stream.play();
+      this.spinerTrue = false;
+      this.buttonplay = false;
+      this.buttonPlay = false;
     } else {
-      this.stream.pause();
+      this.stream.stop();
+     this.stream.release();
       this.buttonplay = true;
       this.buttonPlay = true;
-      //console.log('Pause');
     }
   }
-
   muteAudio(){
     if (this.buttonmute){
-      this.stream.muted = true;
+      this.stream.setVolume(0.0);
       this.buttonmute = false;
     } else {
-      this.stream.muted = false;
+      this.stream.setVolume(1.0);
       this.buttonmute = true;
     }
   }
@@ -130,15 +154,16 @@ export class RadioComponent implements OnInit {
             }
             this.segIntTotal = this.minInt * 60 * 1000;
             if (this.segIntTotal > 0){
-                //clearTimeout(this.varTime);
+                clearTimeout(this.varTime);
                 this.timer = false;
-               // this.varTime = setTimeout( () => {
-               // this.stream.pause();
-               // this.tiempoMostrar = 0;
-               // this.segIntTotal = 0;
-               // this.timer = true;
-               // this.buttonplay = true;
-             // }, this.segIntTotal);
+                this.varTime = setTimeout( () => {
+                this.stream.stop();
+                this.stream.release();
+                this.tiempoMostrar = 0;
+                this.segIntTotal = 0;
+                this.timer = true;
+                this.buttonplay = true;
+              }, this.segIntTotal);
                 this.tiempoMostrar = this.minInt * 60;
                 this.tiempo =
                 {leftTime: this.tiempoMostrar};
@@ -147,7 +172,7 @@ export class RadioComponent implements OnInit {
         }, {
         text: 'cancelar',
           handler: (value) => {
-            //clearTimeout(this.varTime);
+            clearTimeout(this.varTime);
             this.tiempoMostrar = 0;
             this.segIntTotal = 0;
             this.timer = true;
@@ -155,7 +180,6 @@ export class RadioComponent implements OnInit {
         }
       ]
     });
-
     await picker.present();
   }
   getColumns(numColumns, numOptions, columnOptions) {
@@ -179,4 +203,14 @@ export class RadioComponent implements OnInit {
     }
     return options;
   }
+  async presentToast(mensage:any, bgcolor:any, time:number) {
+    const toast = await this.toastController.create({
+      message: mensage,
+      position:"middle",
+      duration: time,
+      color: bgcolor
+    });
+    toast.present();
+  }
+ 
 }
